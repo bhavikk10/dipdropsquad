@@ -413,7 +413,10 @@ class ProfileScreen extends ConsumerWidget {
                         final offsetTop = index.isOdd ? 40.0 : 0.0;
                         return Transform.translate(
                           offset: Offset(0, offsetTop),
-                          child: DropCard(drop: userDrops[index]),
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: DropCard(drop: userDrops[index]),
+                          ),
                         );
                       },
                     ),

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Colors;
 import 'package:go_router/go_router.dart';
 
 import '../../../theme/app_colors.dart';
+import '../../../theme/app_shadows.dart';
 import '../../../theme/app_icons.dart';
 import '../../../widgets/cupertino/app_header_bar.dart';
 
@@ -54,7 +54,7 @@ class _NewDipScreenState extends State<NewDipScreen> {
               minSize: 0,
               onPressed: () {},
               child: const Text(
-                'Share',
+                'Post',
                 style: TextStyle(
                   color: AppColors.authFlowPrimary,
                   fontWeight: FontWeight.w800,
@@ -85,13 +85,7 @@ class _NewDipScreenState extends State<NewDipScreen> {
                   decoration: BoxDecoration(
                     color: AppColors.background,
                     borderRadius: BorderRadius.circular(22),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
-                        blurRadius: 20,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
+                    boxShadow: AppShadows.card,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -155,13 +149,7 @@ class _NewDipScreenState extends State<NewDipScreen> {
               decoration: BoxDecoration(
                 color: AppColors.background,
                 borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.04),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+                boxShadow: AppShadows.card,
               ),
               child: CupertinoTextField(
                 controller: _captionCtrl,
@@ -315,13 +303,7 @@ class _NewDipScreenState extends State<NewDipScreen> {
         decoration: BoxDecoration(
           color: AppColors.background,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.04),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          boxShadow: AppShadows.card,
         ),
         child: Row(
           children: [

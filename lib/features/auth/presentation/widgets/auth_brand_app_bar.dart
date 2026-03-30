@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../theme/app_icons.dart';
+import '../../../../theme/app_shadows.dart';
 
 class AuthBrandAppBar extends StatelessWidget implements PreferredSizeWidget {
   const AuthBrandAppBar({
@@ -35,13 +36,7 @@ class AuthBrandAppBar extends StatelessWidget implements PreferredSizeWidget {
           border: const Border(
             bottom: BorderSide(color: Color(0xFFC7C7CC), width: 1.5),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF000000).withValues(alpha: 0.05),
-              offset: const Offset(0, 2),
-              blurRadius: 4,
-            ),
-          ],
+          boxShadow: AppShadows.headerBar,
         ),
       ),
       leading: IconButton(

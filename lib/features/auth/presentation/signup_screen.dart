@@ -502,15 +502,11 @@ class _GradientContinueButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppColors.joinGradientStart, AppColors.joinGradientEnd],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
-        borderRadius: BorderRadius.circular(28),
+        color: AppColors.authFlowPrimary,
+        borderRadius: BorderRadius.circular(999),
         boxShadow: [
           BoxShadow(
-            color: AppColors.joinGradientStart.withValues(alpha: 0.35),
+            color: AppColors.authFlowPrimary.withValues(alpha: 0.35),
             blurRadius: 16,
             offset: const Offset(0, 8),
           ),
@@ -520,7 +516,7 @@ class _GradientContinueButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onPressed,
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: BorderRadius.circular(999),
           child: SizedBox(
             width: double.infinity,
             height: 56,

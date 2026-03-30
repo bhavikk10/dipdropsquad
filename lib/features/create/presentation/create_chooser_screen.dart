@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Colors;
 import 'package:go_router/go_router.dart';
 
 import '../../../theme/app_colors.dart';
+import '../../../theme/app_shadows.dart';
 
 /// “What are we dropping?” — lives inside [MainScaffold] so the tab bar stays visible.
 class CreateChooserScreen extends StatefulWidget {
@@ -220,13 +220,7 @@ class _OptionCardState extends State<_OptionCard> {
           decoration: BoxDecoration(
             color: AppColors.background,
             borderRadius: BorderRadius.circular(22),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.06),
-                blurRadius: 24,
-                offset: const Offset(0, 10),
-              ),
-            ],
+            boxShadow: AppShadows.card,
           ),
           child: Row(
             children: [

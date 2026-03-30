@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../theme/app_icons.dart';
+import '../theme/app_shadows.dart';
 class MainScaffold extends StatelessWidget {
   final Widget child;
 
@@ -66,6 +67,7 @@ class MainScaffold extends StatelessWidget {
                       width: isLight ? 1.0 : 0.5,
                     ),
                   ),
+                  boxShadow: AppShadows.bottomNavBar(isLight: isLight),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -160,7 +162,7 @@ class _DiamondFabState extends State<_DiamondFab> {
                         offset: const Offset(0, 6),
                       ),
                     ]
-                  : null,
+                  : AppShadows.fabLight(widget.primary),
             ),
             child: Center(
               child: Transform.rotate(

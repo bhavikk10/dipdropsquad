@@ -1,6 +1,7 @@
 import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Material;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,6 +10,7 @@ import '../../../models/models.dart';
 import '../../../providers/mock_data_provider.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_icons.dart';
+import '../../../theme/app_shadows.dart';
 import '../../../widgets/cupertino/app_header_bar.dart';
 
 /// Drop / product detail — light theme, reference layout + finish/size selectors.
@@ -46,11 +48,11 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
     final profile = ref.watch(userProfileProvider);
 
     if (drop == null) {
-      return ColoredBox(
+      return Material(
         color: AppColors.background,
         child: Column(
           children: [
-            _buildNavBar(context, title: ''),
+            _buildNavBar(context, showMenu: false),
             Expanded(
               child: Center(
                 child: Text('Drop not found', style: AppTypography.bodySecondary),
@@ -79,11 +81,11 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
     final seriesLabel = badgeUp.replaceAll(' ', ' / ');
     final msrp = (drop.price * 1.28);
 
-    return ColoredBox(
+    return Material(
       color: AppColors.background,
       child: Column(
         children: [
-          _buildNavBar(context, title: 'DIP • DROP'),
+          _buildNavBar(context, showMenu: true),
           Expanded(
             child: Stack(
               children: [
@@ -536,7 +538,58 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
     );
   }
 
-  Widget _buildNavBar(BuildContext context, {required String title}) {
+  void _showProductOptions(BuildContext context) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (ctx) => CupertinoActionSheet(
+        title: Text(
+          'Drop options',
+          style: AppTypography.caption.copyWith(
+            color: AppColors.textMuted,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        actions: [
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(ctx);
+            },
+            child: const Text('Share'),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(ctx);
+              setState(() => _saved = true);
+            },
+            child: const Text('Add to wishlist'),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(ctx);
+            },
+            child: const Text('Save to collection'),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(ctx);
+            },
+            child: const Text('Copy link'),
+          ),
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Report listing'),
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          onPressed: () => Navigator.pop(ctx),
+          child: const Text('Cancel'),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavBar(BuildContext context, {required bool showMenu}) {
     Widget circleBtn({required VoidCallback onPressed, required Widget child}) {
       return CupertinoButton(
         padding: EdgeInsets.zero,
@@ -558,24 +611,14 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
       child: const Icon(AppIcons.backChevron, color: AppColors.textPrimary, size: 20),
     );
     final menu = circleBtn(
-      onPressed: () {},
+      onPressed: () => _showProductOptions(context),
       child: const Icon(AppIcons.more, color: AppColors.textPrimary, size: 18),
     );
 
     return AppHeaderBar(
       leading: back,
-      middle: title.isEmpty
-          ? null
-          : Text(
-              title,
-              style: AppTypography.caption.copyWith(
-                fontWeight: FontWeight.w700,
-                fontSize: 13,
-                letterSpacing: 0.6,
-                color: AppColors.textPrimary,
-              ),
-            ),
-      trailing: title.isNotEmpty ? menu : null,
+      middle: null,
+      trailing: showMenu ? menu : null,
     );
   }
 
@@ -604,13 +647,7 @@ class _RoundImageAction extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.background.withValues(alpha: 0.92),
           shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0x14000000),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          boxShadow: AppShadows.softCircle,
         ),
         child: Icon(
           icon,

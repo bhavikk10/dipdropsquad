@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 import '../models/models.dart';
+import '../theme/app_shadows.dart';
 
 class DropCard extends StatelessWidget {
   final Drop drop;
@@ -77,9 +79,10 @@ class DropCard extends StatelessWidget {
             color: cs.onSurface,
             fontWeight: FontWeight.w800,
             fontSize: 16,
+            height: 1.2,
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 3),
         Text(
           drop.subtitle,
           maxLines: 1,
@@ -88,49 +91,56 @@ class DropCard extends StatelessWidget {
             color: cs.onSurfaceVariant,
             fontWeight: FontWeight.w400,
             fontSize: 13,
+            height: 1.2,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 3),
         Text(
           '\$${drop.price.toStringAsFixed(2)}',
           style: TextStyle(
             color: cs.onSurface,
             fontWeight: FontWeight.w800,
             fontSize: 15,
+            height: 1.2,
           ),
         ),
       ],
     );
 
     final column = Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         imageStack,
         if (isLight)
           Padding(
-            padding: const EdgeInsets.fromLTRB(12, 12, 12, 14),
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 6),
             child: textColumn,
           )
         else ...[
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           textColumn,
         ],
       ],
     );
 
-    return GestureDetector(
-      onTap: () => context.push('/drops/detail/${drop.id}'),
-      child: isLight
-          ? Container(
-              decoration: BoxDecoration(
-                color: cs.surface,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: cs.outlineVariant, width: 1),
-              ),
-              clipBehavior: Clip.antiAlias,
-              child: column,
-            )
-          : column,
+    return Container(
+      margin: EdgeInsets.zero,
+      child: GestureDetector(
+        onTap: () => context.push('/drops/detail/${drop.id}'),
+        child: isLight
+            ? Container(
+                decoration: BoxDecoration(
+                  color: cs.surface,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: cs.outlineVariant, width: 1),
+                  boxShadow: AppShadows.card,
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: column,
+              )
+            : column,
+      ),
     );
   }
 }

@@ -12,9 +12,9 @@ abstract final class AppIcons {
   static const IconData navCreate = CupertinoIcons.add_circled_solid;
 
   // —— Global header ——
-  static const IconData headerBell = CupertinoIcons.bell_fill;
-  /// Inbox / messages (filled tray stack).
-  static const IconData headerInbox = CupertinoIcons.tray_full_fill;
+  static const IconData headerBell = CupertinoIcons.bell_circle_fill;
+  /// Inbox / messages — envelope reads as mail vs. the previous single bubble.
+  static const IconData headerInbox = CupertinoIcons.envelope_fill;
   static const IconData headerEdit = CupertinoIcons.pencil_circle_fill;
 
   // —— Common UI ——

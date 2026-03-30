@@ -6,6 +6,7 @@ import '../../core/theme/app_typography.dart';
 import '../../providers/auth_providers.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_icons.dart';
+import '../../theme/app_shadows.dart';
 
 class TermsScreen extends ConsumerWidget {
   const TermsScreen({super.key});
@@ -31,13 +32,7 @@ class TermsScreen extends ConsumerWidget {
               border: const Border(
                 bottom: BorderSide(color: Color(0xFFC7C7CC), width: 1.5),
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF000000).withValues(alpha: 0.05),
-                  offset: const Offset(0, 2),
-                  blurRadius: 4,
-                ),
-              ],
+              boxShadow: AppShadows.headerBar,
             ),
           ),
           leading: IconButton(
@@ -117,13 +112,7 @@ class TermsScreen extends ConsumerWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(24),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.06),
-                              blurRadius: 24,
-                              offset: const Offset(0, 10),
-                            ),
-                          ],
+                          boxShadow: AppShadows.card,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,7 +188,7 @@ class TermsScreen extends ConsumerWidget {
                 padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
                 child: SizedBox(
                   width: double.infinity,
-                  height: 56,
+                  height: 54,
                   child: FilledButton(
                     onPressed: accepted
                         ? () {
@@ -214,7 +203,7 @@ class TermsScreen extends ConsumerWidget {
                       elevation: accepted ? 4 : 0,
                       shadowColor: AppColors.authFlowPrimary.withValues(alpha: 0.35),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(999),
                       ),
                     ),
                     child: Text(

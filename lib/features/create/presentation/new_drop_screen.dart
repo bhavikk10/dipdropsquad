@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Colors;
 import 'package:go_router/go_router.dart';
 
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_icons.dart';
+import '../../../theme/app_shadows.dart';
 import '../../../widgets/cupertino/app_header_bar.dart';
 
 /// Full-screen listing form (no shell / tab bar).
@@ -106,7 +106,7 @@ class _NewDropScreenState extends State<NewDropScreen> {
               minSize: 0,
               onPressed: () {},
               child: const Text(
-                'Publish',
+                'Post',
                 style: TextStyle(
                   color: Color(0xFF2E5AAC),
                   fontWeight: FontWeight.w700,
@@ -118,12 +118,9 @@ class _NewDropScreenState extends State<NewDropScreen> {
           Expanded(
             child: SafeArea(
               top: false,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView(
+              child: ListView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                padding: const EdgeInsets.fromLTRB(16, 20, 16, 32),
                 children: [
                   _sectionHeader('VISUALS', trailing: '$_visualCount / $_maxVisuals'),
                   const SizedBox(height: 12),
@@ -277,52 +274,10 @@ class _NewDropScreenState extends State<NewDropScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 100),
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(16, 0, 16, 12 + MediaQuery.paddingOf(context).bottom),
-              child: CupertinoButton(
-                padding: EdgeInsets.zero,
-                onPressed: () {},
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 18),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF2C3E5C),
-                    borderRadius: BorderRadius.circular(18),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF2C3E5C).withValues(alpha: 0.35),
-                        blurRadius: 16,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'LIST DROP FOR SALE',
-                        style: TextStyle(
-                          color: AppColors.background,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 14,
-                          letterSpacing: 0.6,
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Icon(CupertinoIcons.bolt_fill, color: AppColors.background, size: 20),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
+          ),
         ],
       ),
     );
@@ -360,13 +315,7 @@ class _NewDropScreenState extends State<NewDropScreen> {
       decoration: BoxDecoration(
         color: AppColors.background,
         borderRadius: BorderRadius.circular(18),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: AppShadows.card,
       ),
       clipBehavior: Clip.antiAlias,
       child: child,
@@ -385,13 +334,7 @@ class _NewDropScreenState extends State<NewDropScreen> {
         decoration: BoxDecoration(
           color: AppColors.background,
           borderRadius: BorderRadius.circular(18),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.04),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          boxShadow: AppShadows.card,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

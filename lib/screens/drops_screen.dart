@@ -33,6 +33,10 @@ class DropsScreen extends ConsumerStatefulWidget {
 }
 
 class _DropsScreenState extends ConsumerState<DropsScreen> {
+  static const double gridSpacing = 16.0;
+  /// Right column starts lower than the left for the staggered look (not per-item translate).
+  static const double _columnStaggerTop = 32.0;
+
   static const _categories = [
     'All Drops',
     'Footwear',
@@ -122,6 +126,25 @@ class _DropsScreenState extends ConsumerState<DropsScreen> {
         break;
     }
     return list;
+  }
+
+  /// One masonry column: [takeEvenIndices] true → indices 0,2,4…; false → 1,3,5….
+  /// Vertical gap between cards is exactly [gridSpacing]; horizontal gap is [gridSpacing] via the [Row].
+  Widget _dropsColumn(List<Drop> all, {required bool takeEvenIndices}) {
+    final items = <Drop>[
+      for (var i = 0; i < all.length; i++)
+        if (takeEvenIndices ? i.isEven : i.isOdd) all[i],
+    ];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (var i = 0; i < items.length; i++) ...[
+          if (i > 0) SizedBox(height: gridSpacing),
+          DropCard(drop: items[i]),
+        ],
+      ],
+    );
   }
 
   Future<void> _openFilterSheet() async {
@@ -258,23 +281,22 @@ class _DropsScreenState extends ConsumerState<DropsScreen> {
                     )
                   else
                     SliverPadding(
-                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
-                      sliver: SliverGrid(
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.48,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
-                        ),
-                        delegate: SliverChildBuilderDelegate(
-                          childCount: drops.length,
-                          (context, index) {
-                            final offsetTop = index.isOdd ? 40.0 : 0.0;
-                            return Transform.translate(
-                              offset: Offset(0, offsetTop),
-                              child: DropCard(drop: drops[index]),
-                            );
-                          },
+                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 100),
+                      sliver: SliverToBoxAdapter(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: _dropsColumn(drops, takeEvenIndices: true),
+                            ),
+                            SizedBox(width: gridSpacing),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: _columnStaggerTop),
+                                child: _dropsColumn(drops, takeEvenIndices: false),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -283,9 +305,10 @@ class _DropsScreenState extends ConsumerState<DropsScreen> {
                     child: Builder(
                       builder: (context) {
                         final bottomInset = MediaQuery.paddingOf(context).bottom;
-                        final clearance = bottomInset + 120;
+                        // Tab bar (~56) + small gap; keep above bottom nav without excess scroll padding.
+                        final clearance = bottomInset + 56 + 8;
                         return Padding(
-                          padding: EdgeInsets.fromLTRB(16, 16, 16, clearance),
+                          padding: EdgeInsets.fromLTRB(16, 4, 16, clearance),
                           child: Container(
                             height: 56,
                             decoration: BoxDecoration(
@@ -349,6 +372,20 @@ class _DropsFilterSheetState extends State<_DropsFilterSheet> {
   @override
   void initState() {
     super.initState();
+    _syncFromWidget();
+  }
+
+  @override
+  void didUpdateWidget(covariant _DropsFilterSheet oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.sort != widget.sort ||
+        oldWidget.priceBand != widget.priceBand ||
+        oldWidget.inStockOnly != widget.inStockOnly) {
+      _syncFromWidget();
+    }
+  }
+
+  void _syncFromWidget() {
     _sort = widget.sort;
     _price = widget.priceBand;
     _inStock = widget.inStockOnly;
@@ -518,13 +555,16 @@ class _DropsFilterSheetState extends State<_DropsFilterSheet> {
 
   Widget _priceChip(String label, _PriceBand band, ColorScheme cs) {
     final sel = _price == band;
-    return FilterChip(
+    return ChoiceChip(
       label: Text(label),
       selected: sel,
-      onSelected: (_) => setState(() => _price = band),
+      onSelected: (selected) {
+        setState(() {
+          _price = selected ? band : _PriceBand.all;
+        });
+      },
       showCheckmark: false,
       selectedColor: cs.primary.withValues(alpha: 0.2),
-      checkmarkColor: cs.primary,
       labelStyle: AppTypography.bodyPrimary.copyWith(
         fontSize: 13,
         color: sel ? cs.primary : cs.onSurfaceVariant,

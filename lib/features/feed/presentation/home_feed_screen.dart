@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show ThemeMode, Colors;
+import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,6 +8,7 @@ import '../../../providers/mock_data_provider.dart';
 import '../../../providers/mock_providers.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../theme/app_colors.dart';
+import '../../../theme/app_shadows.dart';
 import '../../../theme/app_icons.dart';
 import '../../../theme/theme_provider.dart';
 import '../../../widgets/cupertino/main_app_header.dart';
@@ -48,7 +49,7 @@ class _HomeFeedScreenState extends ConsumerState<HomeFeedScreen> {
                     height: 118,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.fromLTRB(16, 8, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
                       physics: const BouncingScrollPhysics(),
                       itemCount: ring.length,
                       itemBuilder: (context, index) {
@@ -57,12 +58,24 @@ class _HomeFeedScreenState extends ConsumerState<HomeFeedScreen> {
                         final url = item['imageUrl'] as String;
                         final isNew = item['isNewDrop'] as bool;
 
-                        Widget avatar = Container(
-                          width: 64,
-                          height: 64,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(image: NetworkImage(url), fit: BoxFit.cover),
+                        Widget avatar = ClipOval(
+                          child: SizedBox(
+                            width: 64,
+                            height: 64,
+                            child: Image.network(
+                              url,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => ColoredBox(
+                                color: AppColors.surface,
+                                child: const Center(
+                                  child: Icon(
+                                    AppIcons.person,
+                                    color: AppColors.textMuted,
+                                    size: 28,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         );
 
@@ -105,8 +118,18 @@ class _HomeFeedScreenState extends ConsumerState<HomeFeedScreen> {
                     ),
                   ),
                 ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    width: double.infinity,
+                    height: 1,
+                    decoration: BoxDecoration(
+                      color: AppColors.border,
+                      boxShadow: AppShadows.hairlineDown,
+                    ),
+                  ),
+                ),
                 SliverPadding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 80),
+                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 80),
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
@@ -168,13 +191,7 @@ class _CupertinoDipCardState extends ConsumerState<_CupertinoDipCard> {
         color: AppColors.background,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.border, width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
-        ],
+        boxShadow: AppShadows.card,
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(

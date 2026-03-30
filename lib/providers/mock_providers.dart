@@ -6,8 +6,19 @@ const _shoeImg =
     'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=200&q=80';
 const _headphonesImg =
     'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=200&q=80';
+/// Ring tile (alternate product — stable Unsplash id).
 const _lensImg =
-    'https://images.unsplash.com/photo-1516035069371-29a1b244ccff?auto=format&fit=crop&w=200&q=80';
+    'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=200&q=80';
+const _backpackImg =
+    'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=200&q=80';
+const _sunglassesImg =
+    'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=200&q=80';
+const _speakerImg =
+    'https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=200&q=80';
+const _keyboardImg =
+    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=200&q=80';
+const _bottleImg =
+    'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=200&q=80';
 
 final dropperRingProvider = Provider<List<Map<String, dynamic>>>((ref) {
   return [
@@ -15,6 +26,11 @@ final dropperRingProvider = Provider<List<Map<String, dynamic>>>((ref) {
     {'name': 'Alex', 'imageUrl': _shoeImg, 'isNewDrop': false},
     {'name': 'Jordan', 'imageUrl': _headphonesImg, 'isNewDrop': false},
     {'name': 'Taylor', 'imageUrl': _lensImg, 'isNewDrop': false},
+    {'name': 'Riley', 'imageUrl': _backpackImg, 'isNewDrop': false},
+    {'name': 'Morgan', 'imageUrl': _sunglassesImg, 'isNewDrop': false},
+    {'name': 'Casey', 'imageUrl': _speakerImg, 'isNewDrop': false},
+    {'name': 'Sam', 'imageUrl': _keyboardImg, 'isNewDrop': false},
+    {'name': 'Drew', 'imageUrl': _bottleImg, 'isNewDrop': false},
   ];
 });
 
@@ -215,6 +231,7 @@ final discoverCreatorsProvider = Provider<List<Map<String, dynamic>>>((ref) {
   return [
     {
       'name': '@AlexVogue',
+      'handle': 'alexvogue',
       'realName': 'Alexander Chen',
       'avatarUrl':
           'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80',
@@ -222,27 +239,31 @@ final discoverCreatorsProvider = Provider<List<Map<String, dynamic>>>((ref) {
     },
     {
       'name': '@StudioNoir',
+      'handle': 'studio_noir',
       'realName': 'Jordan Blake',
       'avatarUrl':
           'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=200&q=80',
       'isFollowing': false,
     },
     {
-      'name': '@MonoGear',
+      'name': '@mono_gear',
+      'handle': 'mono_gear',
       'realName': 'Taylor Reed',
       'avatarUrl':
           'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80',
       'isFollowing': true,
     },
     {
-      'name': '@ElenaV',
+      'name': '@elenav',
+      'handle': 'elenav',
       'realName': 'Elena Vasquez',
       'avatarUrl':
           'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
       'isFollowing': false,
     },
     {
-      'name': '@DipArchive',
+      'name': '@dip_archive',
+      'handle': 'dip_archive',
       'realName': 'Marcus Cole',
       'avatarUrl':
           'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80',

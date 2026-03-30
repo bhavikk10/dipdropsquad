@@ -191,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           elevation: 4,
                           shadowColor: AppColors.authFlowPrimary.withValues(alpha: 0.35),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
+                            borderRadius: BorderRadius.circular(999),
                           ),
                         ),
                         child: Text(
@@ -309,15 +309,15 @@ class _SocialChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(999),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(999),
         child: Container(
           height: 52,
           padding: const EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(999),
             border: Border.all(color: Colors.grey.shade200),
           ),
           child: Row(

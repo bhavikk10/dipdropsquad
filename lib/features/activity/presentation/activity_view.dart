@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../providers/mock_providers.dart';
 import '../../../theme/app_colors.dart';
+import '../../../theme/app_shadows.dart';
 import 'widgets/activity_feed_row.dart';
 
 /// Activity body: All / Purchases (0–1) or follow-requests (2).
@@ -254,43 +256,60 @@ class _FollowRequestRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final handle = username.replaceFirst('@', '');
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Row(
         children: [
-          ClipOval(
-            child: avatarUrl != null
-                ? Image.network(
-                    avatarUrl!,
-                    width: 52,
-                    height: 52,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => _avatarFallback(),
-                  )
-                : _avatarFallback(),
-          ),
-          const SizedBox(width: 12),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  username,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.textPrimary,
+            child: GestureDetector(
+              onTap: () => context.push('/profile/u/$handle'),
+              behavior: HitTestBehavior.opaque,
+              child: Row(
+                children: [
+                  ClipOval(
+                    child: avatarUrl != null
+                        ? Image.network(
+                            avatarUrl!,
+                            width: 52,
+                            height: 52,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => _avatarFallback(),
+                          )
+                        : _avatarFallback(),
                   ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  fullName,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textMuted,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          username,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          fullName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.textMuted,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           CupertinoButton(
@@ -362,6 +381,8 @@ class _SuggestedUserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final handle = username.replaceFirst('@', '');
+
     return Container(
       width: 132,
       padding: const EdgeInsets.fromLTRB(12, 14, 12, 12),
@@ -369,49 +390,54 @@ class _SuggestedUserCard extends StatelessWidget {
         color: AppColors.background,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.border),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.textPrimary.withValues(alpha: 0.04),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: AppShadows.card,
       ),
       child: Column(
         children: [
-          ClipOval(
-            child: avatarUrl != null
-                ? Image.network(
-                    avatarUrl!,
-                    width: 56,
-                    height: 56,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => _ph(),
-                  )
-                : _ph(),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            username,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w800,
-              color: AppColors.textPrimary,
+          Expanded(
+            child: GestureDetector(
+              onTap: () => context.push('/profile/u/$handle'),
+              behavior: HitTestBehavior.opaque,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ClipOval(
+                    child: avatarUrl != null
+                        ? Image.network(
+                            avatarUrl!,
+                            width: 56,
+                            height: 56,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => _ph(),
+                          )
+                        : _ph(),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    username,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    fullName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: AppColors.textMuted,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: 2),
-          Text(
-            fullName,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 11,
-              color: AppColors.textMuted,
-            ),
-          ),
-          const Spacer(),
+          const SizedBox(height: 8),
           SizedBox(
             width: double.infinity,
             child: CupertinoButton(

@@ -141,8 +141,6 @@ class _ConnectionRowState extends State<_ConnectionRow> {
     _isFollowing = widget.user['isFollowing'] as bool? ?? false;
   }
 
-  static const _slateBlue = Color(0xFF2E4A8A);
-
   @override
   Widget build(BuildContext context) {
     final name = widget.user['displayName'] as String;
@@ -225,10 +223,13 @@ class _ConnectionRowState extends State<_ConnectionRow> {
           TextButton(
             onPressed: () => setState(() => _isFollowing = !_isFollowing),
             style: TextButton.styleFrom(
-              backgroundColor: _isFollowing ? const Color(0xFFE8E8EC) : _slateBlue,
+              backgroundColor:
+                  _isFollowing ? const Color(0xFFE8E8EC) : AppColors.authFlowPrimary,
               foregroundColor: _isFollowing ? AppColors.textMuted : Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(999)),
+              ),
             ),
             child: Text(
               _isFollowing ? 'Following' : 'Follow',

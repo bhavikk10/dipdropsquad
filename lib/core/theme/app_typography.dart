@@ -13,6 +13,7 @@ abstract final class AppTypography {
         fontWeight: FontWeight.w900,
         letterSpacing: 1.5,
         color: AppColors.textPrimary,
+        decoration: TextDecoration.none,
       );
 
   /// Main page titles (product names, "Welcome Back", etc.).
@@ -21,6 +22,7 @@ abstract final class AppTypography {
         fontWeight: FontWeight.w800,
         letterSpacing: -0.5,
         color: AppColors.textPrimary,
+        decoration: TextDecoration.none,
       );
 
   /// Section / list headers ("New", "SELECT FINISH", etc.).
@@ -29,6 +31,7 @@ abstract final class AppTypography {
         fontWeight: FontWeight.w700,
         letterSpacing: 0,
         color: AppColors.textPrimary,
+        decoration: TextDecoration.none,
       );
 
   /// Standard body, primary chat lines, names, descriptions.
@@ -37,6 +40,7 @@ abstract final class AppTypography {
         fontWeight: FontWeight.w500,
         height: 1.4,
         color: AppColors.textPrimary,
+        decoration: TextDecoration.none,
       );
 
   /// Secondary lines, @usernames, subdued descriptions.
@@ -44,6 +48,7 @@ abstract final class AppTypography {
         fontSize: 14,
         fontWeight: FontWeight.w400,
         color: AppColors.textMuted,
+        decoration: TextDecoration.none,
       );
 
   /// Timestamps, hints, feed/chat meta ("2m", "• 4h").
@@ -51,6 +56,7 @@ abstract final class AppTypography {
         fontSize: 12,
         fontWeight: FontWeight.w400,
         color: AppColors.textMuted,
+        decoration: TextDecoration.none,
       );
 
   /// Primary and filled buttons.
@@ -59,6 +65,7 @@ abstract final class AppTypography {
         fontWeight: FontWeight.w700,
         letterSpacing: 0.5,
         color: AppColors.textPrimary,
+        decoration: TextDecoration.none,
       );
 
   /// Small tags: "IN STOCK", unread badges, ALL CAPS micro labels.
@@ -67,5 +74,6 @@ abstract final class AppTypography {
         fontWeight: FontWeight.w800,
         letterSpacing: 0.5,
         color: AppColors.textPrimary,
+        decoration: TextDecoration.none,
       );
 }

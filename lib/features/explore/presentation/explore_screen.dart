@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_typography.dart';
 import '../../../providers/mock_providers.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_icons.dart';
+import '../../../theme/app_shadows.dart';
 import '../../../widgets/cupertino/main_app_header.dart';
 
 class ExploreScreen extends ConsumerWidget {
@@ -48,6 +50,7 @@ class ExploreScreen extends ConsumerWidget {
                       decoration: BoxDecoration(
                         color: AppColors.surface,
                         borderRadius: BorderRadius.circular(24),
+                        boxShadow: AppShadows.searchField,
                       ),
                       style: AppTypography.bodyPrimary.copyWith(fontSize: 16),
                       placeholderStyle: AppTypography.bodySecondary.copyWith(fontSize: 16),
@@ -73,7 +76,7 @@ class ExploreScreen extends ConsumerWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 180,
+                    height: 196,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.only(left: 16, right: 4),
@@ -158,6 +161,7 @@ class _DiscoverCreatorCardState extends State<_DiscoverCreatorCard> {
     final name = widget.creator['name'] as String;
     final realName = widget.creator['realName'] as String;
     final url = widget.creator['avatarUrl'] as String;
+    final handle = widget.creator['handle'] as String? ?? '';
 
     return Container(
       width: 140,
@@ -165,37 +169,47 @@ class _DiscoverCreatorCardState extends State<_DiscoverCreatorCard> {
         color: AppColors.background,
         border: Border.all(color: AppColors.border),
         borderRadius: BorderRadius.circular(16),
+        boxShadow: AppShadows.card,
       ),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 10),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(image: NetworkImage(url), fit: BoxFit.cover),
-              border: Border.all(color: AppColors.border, width: 1),
+          GestureDetector(
+            onTap: handle.isEmpty ? null : () => context.push('/profile/u/$handle'),
+            behavior: HitTestBehavior.opaque,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(image: NetworkImage(url), fit: BoxFit.cover),
+                    border: Border.all(color: AppColors.border, width: 1),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  name,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.bodyPrimary,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  realName,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.caption,
+                ),
+              ],
             ),
           ),
-          const Spacer(),
-          Text(
-            name,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTypography.bodyPrimary,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            realName,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTypography.caption,
-          ),
-          const Spacer(),
+          const SizedBox(height: 6),
           SizedBox(
             width: double.infinity,
             height: 32,
